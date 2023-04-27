@@ -41,6 +41,16 @@ def handle_http_requests2(url):
     return html
 
 
+def convert_date_form(date_str):
+    """
+    :param date_str: "12/31/2017"
+    :return: new_date_str = "31 Dec 2017"
+    """
+    date = datetime.strptime(date_str, '%m/%d/%Y')
+    new_date_str = datetime.strftime(date, '%d %b %Y')
+    return new_date_str
+
+
 def find_min_distance_between_regex_matches(text, string2):
     """
     regex1: the regex of t-test

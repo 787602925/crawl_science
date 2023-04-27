@@ -23,10 +23,12 @@ def search_science(start_time, end_time, keyword):
                          }
             }
     """
-    url = tool.generate_url(start_time, end_time, keyword)
+    format_start_time = tool.convert_date_form(start_time)
+    format_end_time = tool.convert_date_form(end_time)
+    url = tool.generate_url(format_start_time, format_end_time, keyword)
     html = tool.handle_http_requests2(url)
     last_related_article = tool.get_last_related_article(html, keyword)
-    articles = tool.get_all_related_article(start_time, end_time, keyword, last_related_article)
-    diagram = tool.generate_diagram(start_time, end_time, articles)
+    articles = tool.get_all_related_article(format_start_time, format_end_time, keyword, last_related_article)
+    diagram = tool.generate_diagram(format_start_time, format_end_time, articles)
     result = tool.merge_diagram_articles(diagram, articles)
     return result
