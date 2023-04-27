@@ -242,7 +242,7 @@ def get_all_related_article(start_time, end_time, keyword, last_article):
     :param end_time: "31 Dec 2017"
     :param keyword: "n = 3" the space is required between "="
     :param last_article: {"page": "3", "article": "https://"}
-    :return: articles: {"Biomedicine":{"title": "Biomedicine", "url": "https://", "authors": "...", "published time": "24 Jun 2017"}}
+    :return: articles: {"Biomedicine":{"title": "Biomedicine", "url": "https://", "pdf": "https://", "authors": "...", "published time": "24 Jun 2017"}}
     """
     # f'https://www.science.org/action/doSearch?field1=AllField&text1=t-test&field2=AllField&text2={keyword}&field3=AllField&text3=&publication=&Ppub=&AfterMonth={start_str[1]}&AfterYear={start_str[2]}&BeforeMonth={end_str[1]}&BeforeYear={end_str[2]}'
     url_pages = [generate_url(start_time, end_time, keyword) + f'&pageSize=20&startPage={page}' for page in range(int(last_article["page"]))]
@@ -261,7 +261,7 @@ def get_articles_info_in_one_page(html):
     """
 
     :param html: the source code of a page
-    :return: articles: {"Biomedicine":{"title": "Biomedicine", "url": "https://", "authors": "...", "published time": "24 Jun 2017"}}
+    :return: articles: {"Biomedicine":{"title": "Biomedicine", "url": "https://", "pdf": "https://", "authors": "...", "published time": "24 Jun 2017"}}
     """
     soup = BeautifulSoup(html, 'html.parser')
     all_divs = soup.find_all(name='div', class_='card-header')
@@ -285,7 +285,7 @@ def get_only_related_articles_info(html, last_article):
 
     :param html: the source code of the page
     :param last_article: {"page": "3", "article": "https://"}
-    :return: articles: {"Biomedicine":{"title": "Biomedicine", "url": "https://", "authors": "...", "published time": "24 Jun 2017"}}
+    :return: articles: {"Biomedicine":{"title": "Biomedicine", "url": "https://", "pdf": "https://", "authors": "...", "published time": "24 Jun 2017"}}
     """
     soup = BeautifulSoup(html, 'html.parser')
     all_divs = soup.find_all(name='div', class_='card-header')
@@ -311,7 +311,7 @@ def generate_diagram(start_time, end_time, articles):
 
     :param start_time: 01 Jan 2017
     :param end_time: 31 Dec 2017
-    :param articles: {"Biomedicine":{"title": "Biomedicine", "url": "https://", "authors": "...", "published time": "24 Jun 2017"}}
+    :param articles: {"Biomedicine":{"title": "Biomedicine", "url": "https://", "pdf": "https://", "authors": "...", "published time": "24 Jun 2017"}}
     :return: time_stamp: If the time difference is less than or equal to one year
                          --> {'Jan 2017': 12, 'Feb 2017': 4, ...}
                          else
