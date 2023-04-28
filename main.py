@@ -3,8 +3,8 @@ import tool
 
 def search_science(start_time, end_time, keyword):
     """
-    :param start_time: "01 Jan 2017"
-    :param end_time: "31 Dec 2017"
+    :param start_time: "01/01/2017"
+    :param end_time: "31/12/2017"
     :param keyword: "n = 3" (the user must input space beside special symbols such as "=")
     :return: result:
             {'diagram':{'2017-05': 1, '2017-11': 2, '2017-02': 1, '2017-04': 2, '2017-10': 2},
@@ -27,8 +27,11 @@ def search_science(start_time, end_time, keyword):
     format_end_time = tool.convert_date_form(end_time)
     url = tool.generate_url(format_start_time, format_end_time, keyword)
     html = tool.handle_http_requests2(url)
-    last_related_article = tool.get_last_related_article(html, keyword)
+    last_related_article = tool.get_last_related_article(url, html, keyword)
     articles = tool.get_all_related_article(format_start_time, format_end_time, keyword, last_related_article)
     diagram = tool.generate_diagram(format_start_time, format_end_time, articles)
     result = tool.merge_diagram_articles(diagram, articles)
     return result
+
+
+search_science("01/01/2017", "12/31/2017", "n = 3")

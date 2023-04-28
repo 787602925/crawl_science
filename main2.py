@@ -33,4 +33,4 @@ def search_science(start_time, end_time, keyword):
     return result
 
 
-# print(search_science("01 Jan 2017", "31 Dec 2017", "n = 3"))
+# print(search_science("01/01/2017", "12/31/2017", "n = 3"))

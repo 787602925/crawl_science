@@ -154,15 +154,16 @@ def generate_url(start_time, end_time, keyword):
     return url
 
 
-def get_last_related_article(html, keyword):
+def get_last_related_article(url, html, keyword):
     """
+    :param url: the url of the pagination page
+    https://www.science.org/action/doSearch?field1=AllField&text1=t-test&field2=AllField&text2=p-value&field3=AllField&text3=&publication=&Ppub=&AfterMonth=1&AfterYear=2017&BeforeMonth=12&BeforeYear=2017
     :param keyword: user defined keyword
     :param html: the source code of pagination url
-    https://www.science.org/action/doSearch?field1=AllField&text1=t-test&field2=AllField&text2=p-value&field3=AllField&text3=&publication=&Ppub=&AfterMonth=1&AfterYear=2017&BeforeMonth=12&BeforeYear=2017&pageSize=20&startPage=0
     :return: dict: the last related article and the page
     {'article': 'https://', 'page': '2'}
     """
-    max_page = get_last_page(html)
+    max_page = int(get_last_page(html))
     # article = ''
     # result_page = ''
     current_page = int(max_page/14) + 1
@@ -170,13 +171,15 @@ def get_last_related_article(html, keyword):
     # first article on the next page is not
     tag = 0
     while True:
-        html = html + f"&pageSize=20&startPage={current_page-1}"
-        articles = get_all_articles(html)
+        url = ''.join(url.split('&pageSize=')[0])
+        url = url + f"&pageSize=20&startPage={current_page-1}"
+        html2 = handle_http_requests2(url)
+        articles = get_all_articles(html2)
         first_is_related = is_related(articles[0], keyword)
         last_is_related = is_related(articles[-1], keyword)
         if first_is_related and not last_is_related:
             result_page = str(current_page)
-            article = binary_search(articles, keyword)
+            article = binary_search_in_one_page(articles, keyword)
             break
         elif not first_is_related:
             current_page -= 1
@@ -225,9 +228,9 @@ def get_all_articles(html):
     return url_list
 
 
-def binary_search(articles, keyword):
+def binary_search_in_one_page(articles, keyword):
     """
-    Find the last article that matches the criteria by the binary search method
+    Find the last article in one page that matches the criteria by the binary search method
     :param keyword: user defined keyword
     :param articles: the url list of all articles
     :return: html: the url of the last related article
