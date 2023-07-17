@@ -3,8 +3,8 @@ import tool
 
 def search_science(start_time, end_time, keyword):
     """
-    :param start_time: "01/01/2017"
-    :param end_time: "12/31/2017"
+    :param start_time: "2017-01"
+    :param end_time: "2017-12"
     :param keyword: "n = 3" (the user must input space beside special symbols such as "=")
     :return: result:
             {'diagram':{'2017-05': 1, '2017-11': 2, '2017-02': 1, '2017-04': 2, '2017-10': 2},
@@ -33,4 +33,4 @@ def search_science(start_time, end_time, keyword):
     return result
 
 
-# print(search_science("01/01/2017", "12/31/2017", "n = 3"))
+print(search_science("2017-01", "2018-12", "n = 3"))
